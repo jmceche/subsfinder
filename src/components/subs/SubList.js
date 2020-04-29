@@ -11,10 +11,10 @@ const SubList = ({ subs, loading }) => {
       <table className='list text-center'>
         <thead>
           <tr>
-            <th id='name'>File Name</th>
+            <th id='name'>Name</th>
             <th>Language</th>
             <th>Uploaded</th>
-            <th>Downloads</th>
+            <th>Download</th>
           </tr>
         </thead>
         <tbody>

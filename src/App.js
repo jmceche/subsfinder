@@ -14,19 +14,25 @@ const App = () => {
   const [subs, setSubs] = useState([]);
   const [loading, setLoading] = useState(false);
   const [alert, setAlert] = useState(null);
+  const [noRes, setNoRes] = useState(false);
 
   // Search subtitles
   const searchSubs = async (url) => {
+    setNoRes(false);
     setLoading(true);
     const headers = {
       "Content-Type": "application/json",
       "X-User-Agent": "jm_osdownloader",
     };
-    const uri = `https://rest.opensubtitles.org/search${url}`;
-    const resp = await Axios.get(uri, { headers: headers });
-    const data = resp.data;
-    setLoading(false);
-    setSubs(data);
+    try {
+      const uri = `https://rest.opensubtitles.org/search${url}`;
+      const resp = await Axios.get(uri, { headers: headers });
+      //const data = resp.data;
+      setLoading(false);
+      resp.data.length === 0 ? setNoRes(true) : setSubs(resp.data);
+    } catch (err) {
+      showAlert(err.message, "danger");
+    }
   };
 
   //Construct URL for name search
@@ -34,11 +40,12 @@ const App = () => {
     // URL variables
     //const baseUrl = `/search`;
     const query = `/query-${title}`;
-    const epis = episode.length > 0 ? `/episode-${episode}` : "";
-    const sea = season.length > 0 ? `/season-${season}` : "";
+    const epis =
+      episode.length > 0 ? `/episode-${episode.replace(/^0+/, "")}` : "";
+    const sea = season.length > 0 ? `/season-${season.replace(/^0+/, "")}` : "";
     const language = `/sublanguageid-${lang}`;
     //console.log(baseUrl + epis + query + sea + lang);
-    return encodeURI(epis + query + sea + language);
+    return encodeURI(epis + query + sea + language).toLowerCase();
   };
 
   //Construct URL for hash search
@@ -58,16 +65,6 @@ const App = () => {
     setTimeout(() => setAlert(null), 5000);
   };
 
-  /*   // Show clear and list
-  const showClear = () => {
-    subs.length > 0 ?  (
-      <button className='btn btn-light btn-block' onClick={clearSubs}>
-              Clear
-            </button>
-            <SubList subs={subs} loading={loading} /> :  ""
-    )
-  }
- */
   return (
     <Router>
       <div className='App'>
@@ -106,6 +103,7 @@ const App = () => {
               Clear
             </button>
           )}
+          {noRes && <h1>No Results Found :(</h1>}
           {subs.length > 0 && <SubList subs={subs} loading={loading} />}
         </div>
       </div>

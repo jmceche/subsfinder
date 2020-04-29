@@ -11,7 +11,7 @@ const Navbar = ({ title }) => {
           <Link to='/'>Name Search</Link>
         </li>
         <li>
-          <Link to='/hash'>Hash Search</Link>
+          <Link to='/hash'>File Search</Link>
         </li>
         <li>
           <Link to='/about'>About</Link>

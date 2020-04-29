@@ -55,14 +55,14 @@ const NameSearch = ({ searchSubs, nameUrlConstructor, showAlert }) => {
           onChange={onChange}
         />
         <input
-          type='text'
+          type='number'
           name='season'
           placeholder='Season (for series only)'
           value={userInput.season}
           onChange={onChange}
         />
         <input
-          type='text'
+          type='number'
           name='episode'
           placeholder='Episode (for series only)'
           value={userInput.episode}
