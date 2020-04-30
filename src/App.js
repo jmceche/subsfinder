@@ -5,10 +5,11 @@ import HashSearch from "./components/subs/HashSearch";
 import SubList from "./components/subs/SubList";
 import Alert from "./components/layout/Alert";
 import About from "./components/pages/About";
+import Spinner from "./components/layout/Spinner";
 
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import "./App.css";
-import Axios from "axios";
+import axios from "axios";
 
 const App = () => {
   const [subs, setSubs] = useState([]);
@@ -18,33 +19,30 @@ const App = () => {
 
   // Search subtitles
   const searchSubs = async (url) => {
-    setNoRes(false);
     setLoading(true);
+    setNoRes(false);
     const headers = {
       "Content-Type": "application/json",
       "X-User-Agent": "jm_osdownloader",
     };
     try {
       const uri = `https://rest.opensubtitles.org/search${url}`;
-      const resp = await Axios.get(uri, { headers: headers });
-      //const data = resp.data;
-      setLoading(false);
-      resp.data.length === 0 ? setNoRes(true) : setSubs(resp.data);
+      const resp = await axios.get(uri, { headers: headers });
+      resp.data.length > 0 ? setSubs(resp.data) : setNoRes(true);
     } catch (err) {
       showAlert(err.message, "danger");
     }
+    setLoading(false);
   };
 
   //Construct URL for name search
   const nameUrlConstructor = (title, season, episode, lang) => {
     // URL variables
-    //const baseUrl = `/search`;
     const query = `/query-${title}`;
     const epis =
       episode.length > 0 ? `/episode-${episode.replace(/^0+/, "")}` : "";
     const sea = season.length > 0 ? `/season-${season.replace(/^0+/, "")}` : "";
     const language = `/sublanguageid-${lang}`;
-    //console.log(baseUrl + epis + query + sea + lang);
     return encodeURI(epis + query + sea + language).toLowerCase();
   };
 
@@ -104,7 +102,11 @@ const App = () => {
             </button>
           )}
           {noRes && <h1>No Results Found :(</h1>}
-          {subs.length > 0 && <SubList subs={subs} loading={loading} />}
+          {subs.length > 0 ? (
+            <SubList subs={subs} />
+          ) : loading ? (
+            <Spinner />
+          ) : null}
         </div>
       </div>
     </Router>

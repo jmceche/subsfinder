@@ -33,7 +33,6 @@ const NameSearch = ({ searchSubs, nameUrlConstructor, showAlert }) => {
   };
   const selectLang = (lang) => {
     setLang(lang);
-    //console.log(lang);
   };
 
   const onChange = (e) => {
@@ -73,7 +72,6 @@ const NameSearch = ({ searchSubs, nameUrlConstructor, showAlert }) => {
           type='submit'
           value='Search'
           className='btn btn-block btn-dark'
-          //disabled={userInput.title === ""}
         />
       </form>
     </div>
