@@ -6,6 +6,7 @@ import SubList from "./components/subs/SubList";
 import Alert from "./components/layout/Alert";
 import About from "./components/pages/About";
 import Spinner from "./components/layout/Spinner";
+import NotFound from "./components/subs/NotFound";
 
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import "./App.css";
@@ -35,25 +36,6 @@ const App = () => {
     setLoading(false);
   };
 
-  //Construct URL for name search
-  const nameUrlConstructor = (title, season, episode, lang) => {
-    // URL variables
-    const query = `/query-${title}`;
-    const epis =
-      episode.length > 0 ? `/episode-${episode.replace(/^0+/, "")}` : "";
-    const sea = season.length > 0 ? `/season-${season.replace(/^0+/, "")}` : "";
-    const language = `/sublanguageid-${lang}`;
-    return encodeURI(epis + query + sea + language).toLowerCase();
-  };
-
-  //Construct URL for hash search
-  const hashUrlConstructor = (fileSize, hash, lang) => {
-    const url = encodeURI(
-      `/moviebytesize-${fileSize}/moviehash-${hash}/sublanguageid-${lang}`
-    );
-    return url;
-  };
-
   // Clear subs from state
   const clearSubs = () => setSubs([]);
 
@@ -77,7 +59,6 @@ const App = () => {
                 <NameSearch
                   {...props}
                   searchSubs={searchSubs}
-                  nameUrlConstructor={nameUrlConstructor}
                   showAlert={showAlert}
                 />
               )}
@@ -89,7 +70,6 @@ const App = () => {
                 <HashSearch
                   {...props}
                   searchSubs={searchSubs}
-                  hashUrlConstructor={hashUrlConstructor}
                   showAlert={showAlert}
                 />
               )}
@@ -101,7 +81,7 @@ const App = () => {
               Clear
             </button>
           )}
-          {noRes && <h1>No Results Found :(</h1>}
+          {noRes && <NotFound />}
           {subs.length > 0 ? (
             <SubList subs={subs} />
           ) : loading ? (

@@ -3,9 +3,17 @@ import PropTypes from "prop-types";
 import hashFile from "./hashFile";
 import Languages from "./Languages";
 
-const HashSearch = ({ searchSubs, hashUrlConstructor, showAlert }) => {
+const HashSearch = ({ searchSubs, showAlert }) => {
   const [file, setFile] = useState(null);
   const [lang, setLang] = useState("eng");
+
+  //Construct URL for hash search
+  const hashUrlConstructor = (fileSize, hash, lang) => {
+    const url = encodeURI(
+      `/moviebytesize-${fileSize}/moviehash-${hash}/sublanguageid-${lang}`
+    );
+    return url;
+  };
 
   const onChange = (e) => {
     setFile(e.target.files[0]);
@@ -45,7 +53,7 @@ const HashSearch = ({ searchSubs, hashUrlConstructor, showAlert }) => {
         <input
           type='submit'
           value='Search'
-          className='btn btn-block btn-light'
+          className='btn btn-block btn-dark'
           //disabled={file === null}
         />
       </form>

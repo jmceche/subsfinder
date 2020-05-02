@@ -5,7 +5,7 @@ import React, { useReducer, useState } from "react";
 import PropTypes from "prop-types";
 import Languages from "./Languages";
 
-const NameSearch = ({ searchSubs, nameUrlConstructor, showAlert }) => {
+const NameSearch = ({ searchSubs, showAlert }) => {
   const [userInput, setUserInput] = useReducer(
     (state, newState) => ({ ...state, ...newState }),
     {
@@ -15,6 +15,17 @@ const NameSearch = ({ searchSubs, nameUrlConstructor, showAlert }) => {
     }
   );
   const [lang, setLang] = useState("eng");
+
+  //Construct URL for name search
+  const nameUrlConstructor = (title, season, episode, lang) => {
+    // URL variables
+    const query = `/query-${title}`;
+    const epis =
+      episode.length > 0 ? `/episode-${episode.replace(/^0+/, "")}` : "";
+    const sea = season.length > 0 ? `/season-${season.replace(/^0+/, "")}` : "";
+    const language = `/sublanguageid-${lang}`;
+    return encodeURI(epis + query + sea + language).toLowerCase();
+  };
 
   const onSubmit = (e) => {
     e.preventDefault();
