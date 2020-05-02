@@ -1,18 +1,22 @@
-OPENSUBTITLES.ORG IS CHANGING ITS API:
--LOGIN IS REQUIRED TO SEARCH/DOWNLOAD SUBS (ADD LOGIN AND TOKEN HANDLING)
+# NOTICE:
 
--Subtitle finder using Opensubtitle API
+## OPENSUBTITLES.ORG IS CHANGING ITS API:
 
-This finder will search from a user input or using a hash file.
+## LOGIN IS REQUIRED TO SEARCH/DOWNLOAD SUBS (ADD LOGIN AND TOKEN HANDLING)
 
-Components for React:
--NavBar
--NameSearch
--HashSearch
--SubList
--Sub
+# Subtitle finder using Opensubtitle API
 
-TODO:
--Add languages
--Use a single Search component in App??? (instead of 2 different methos for each type of search)
--Hooks and context API?? (use a global state???)
+### This app uses OpenSubtitles.org REST API to search and download subtitles.
+
+## **You can use two types of search methods:**
+
+### Name Search:
+
+Write the movie or serie title you're looking for.
+Please notice that if you don't enter a season or episode for series, it will show the first 50 results in no particular order.
+
+### File Search:
+
+OpenSubtitles API offers you to search for the subtitle of the specific file you want.
+Just open the file dialog and select the file.
+Please Notice is not 100% effective.
