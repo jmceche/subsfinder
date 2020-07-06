@@ -9,7 +9,7 @@ const SubList = ({ subs, loading }) => {
         <tr>
           <th id='name'>Name</th>
           <th>Language</th>
-          <th>Uploaded</th>
+          <th id='date'>Uploaded</th>
           <th>Download</th>
         </tr>
       </thead>

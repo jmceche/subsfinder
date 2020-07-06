@@ -30,7 +30,7 @@ const SubItem = ({
           <a href={subLink}>{subFile}</a>
         </td>
         <td>{subLang}</td>
-        <td>{uploadDate}</td>
+        <td id='date-b'>{uploadDate}</td>
         <td>
           <a href={subLink}>
             <i className='fas fa-file-download all-center'></i>

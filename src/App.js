@@ -12,6 +12,14 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import "./App.css";
 import axios from "axios";
 
+let openSubtitles_UA;
+
+if (process.env.NODE_ENV !== "production") {
+  openSubtitles_UA = process.env.REACT_APP_OPENSUBTITLES_USER_AGENT;
+} else {
+  openSubtitles_UA = process.env.OPENSUBTITLES_USER_AGENT;
+}
+
 const App = () => {
   const [subs, setSubs] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -24,7 +32,7 @@ const App = () => {
     setNoRes(false);
     const headers = {
       "Content-Type": "application/json",
-      "X-User-Agent": "jm_osdownloader",
+      "X-User-Agent": openSubtitles_UA,
     };
     try {
       const uri = `https://rest.opensubtitles.org/search${url}`;

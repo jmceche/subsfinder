@@ -91,7 +91,7 @@ const NameSearch = ({ searchSubs, showAlert }) => {
 
 NameSearch.propTypes = {
   searchSubs: PropTypes.func.isRequired,
-  nameUrlConstructor: PropTypes.func.isRequired,
+
   showAlert: PropTypes.func.isRequired,
 };
 
