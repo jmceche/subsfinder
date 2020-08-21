@@ -12,14 +12,6 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import "./App.css";
 import axios from "axios";
 
-let openSubtitles_UA;
-
-if (process.env.NODE_ENV !== "production") {
-  openSubtitles_UA = process.env.REACT_APP_OPENSUBTITLES_USER_AGENT;
-} else {
-  openSubtitles_UA = process.env.OPENSUBTITLES_USER_AGENT;
-}
-
 const App = () => {
   const [subs, setSubs] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -32,7 +24,7 @@ const App = () => {
     setNoRes(false);
     const headers = {
       "Content-Type": "application/json",
-      "X-User-Agent": openSubtitles_UA,
+      "X-User-Agent": "jm_osdownloader",
     };
     try {
       const uri = `https://rest.opensubtitles.org/search${url}`;
@@ -57,44 +49,49 @@ const App = () => {
     <Router>
       <div className='App'>
         <Navbar />
-        <div className='container'>
-          <Alert alert={alert} />
-          <Switch>
-            <Route
-              exact
-              path='/'
-              render={(props) => (
-                <NameSearch
-                  {...props}
-                  searchSubs={searchSubs}
-                  showAlert={showAlert}
-                />
-              )}
-            />
-            <Route
-              exact
-              path='/hash'
-              render={(props) => (
-                <HashSearch
-                  {...props}
-                  searchSubs={searchSubs}
-                  showAlert={showAlert}
-                />
-              )}
-            />
-          </Switch>
-          <Route exact path='/about' component={About} />
-          {subs.length > 0 && (
-            <button className='btn btn-light btn-block' onClick={clearSubs}>
-              Clear
-            </button>
-          )}
-          {noRes && <NotFound />}
-          {subs.length > 0 ? (
-            <SubList subs={subs} />
-          ) : loading ? (
-            <Spinner />
-          ) : null}
+        <div className='container grid-2'>
+          <div id='left'>
+            <Switch>
+              <Route
+                exact
+                path='/'
+                render={(props) => (
+                  <NameSearch
+                    {...props}
+                    searchSubs={searchSubs}
+                    showAlert={showAlert}
+                  />
+                )}
+              />
+              <Route
+                exact
+                path='/hash'
+                render={(props) => (
+                  <HashSearch
+                    {...props}
+                    searchSubs={searchSubs}
+                    showAlert={showAlert}
+                  />
+                )}
+              />
+              <Route exact path='/about' component={About} />
+            </Switch>
+            {subs.length > 0 && (
+              <button className='btn btn-light btn-block' onClick={clearSubs}>
+                Clear
+              </button>
+            )}
+            <Alert alert={alert} />
+          </div>
+
+          <div id='right'>
+            {noRes && <NotFound />}
+            {subs.length > 0 ? (
+              <SubList subs={subs} />
+            ) : loading ? (
+              <Spinner />
+            ) : null}
+          </div>
         </div>
       </div>
     </Router>

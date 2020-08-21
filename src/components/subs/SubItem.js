@@ -13,30 +13,47 @@ const SubItem = ({
   movieKind,
   serieSeason,
   serieEpisode,
+  subFormat,
 }) => {
   return (
     <Fragment>
-      <tr>
-        <td>
+      {/*  <tr>
+        <td label='Title'>
           <h4>{title}</h4>
           {movieKind === "episode" ? (
-            <span>
-              <p>{`Season: ${serieSeason}`}</p>
-              <p>{`Episode: ${serieEpisode}`}</p>
-            </span>
-          ) : (
-            <p></p>
-          )}
-          <a href={subLink}>{subFile}</a>
+            <p>{`Season: ${serieSeason} - Episode: ${serieEpisode}`}</p>
+          ) : null}
+          <p>{subFile}</p>
         </td>
-        <td>{subLang}</td>
-        <td id='date-b'>{uploadDate}</td>
-        <td>
-          <a href={subLink}>
+        <td label='Language'>{subLang}</td>
+        <td id='date-b' label='Uploaded'>
+          {uploadDate}
+        </td>
+        <td label='Download'>
+          <a href={subLink.slice(0, -2) + subFormat}>
             <i className='fas fa-file-download all-center'></i>
           </a>
         </td>
-      </tr>
+      </tr> */}
+      <h4 className='text-center'>{title}</h4>
+      {movieKind === "episode" && (
+        <p>{`Season: ${serieSeason} - Episode: ${serieEpisode}`}</p>
+      )}
+      <p>
+        <strong>File Name:</strong> {subFile}
+      </p>
+      <p>
+        <strong>Language:</strong> {subLang}
+      </p>
+      <p>
+        <strong>Uploaded:</strong> {uploadDate}
+      </p>
+      <a
+        className='btn btn-block btn-primary text-center'
+        href={subLink.slice(0, -2) + subFormat}
+      >
+        Download Subtitle <i className='fas fa-file-download'></i>
+      </a>
     </Fragment>
   );
 };
