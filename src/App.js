@@ -52,28 +52,12 @@ const App = () => {
         <div className='container grid-2'>
           <div id='left'>
             <Switch>
-              <Route
-                exact
-                path='/'
-                render={(props) => (
-                  <NameSearch
-                    {...props}
-                    searchSubs={searchSubs}
-                    showAlert={showAlert}
-                  />
-                )}
-              />
-              <Route
-                exact
-                path='/hash'
-                render={(props) => (
-                  <HashSearch
-                    {...props}
-                    searchSubs={searchSubs}
-                    showAlert={showAlert}
-                  />
-                )}
-              />
+              <Route exact path='/'>
+                <NameSearch searchSubs={searchSubs} showAlert={showAlert} />
+              </Route>
+              <Route exact path='/hash'>
+                <HashSearch searchSubs={searchSubs} showAlert={showAlert} />
+              </Route>
               <Route exact path='/about' component={About} />
             </Switch>
             {subs.length > 0 && (
